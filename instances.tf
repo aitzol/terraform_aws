@@ -2,11 +2,11 @@ resource "aws_instance" "mi-primera-instancia" {
   ami           = data.aws_ami.Ubuntu_latest.id
   instance_type = "t2.micro"
 
-  security_groups = ["default",aws_security_group.web-ssh.name]  # Gehienez bost security group izan ditzazke
+  vpc_security_group_ids = [aws_security_group.web-ssh.id]
   key_name = aws_key_pair.clave-ssh-curso.key_name
 
   user_data = file("userdata-script.sh")
-
+  subnet_id = aws_subnet.subred-1.id
   tags = {
     name = "mi-primera-instancia"
   }
